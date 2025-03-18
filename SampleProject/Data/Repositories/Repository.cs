@@ -30,7 +30,7 @@ namespace Data.Repositories
         }
 
         public T Get(Guid id)
-        {
+        {            
             return _documentSession.Load<T>(id);
         }
 

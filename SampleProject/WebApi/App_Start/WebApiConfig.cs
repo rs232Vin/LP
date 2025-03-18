@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 using System.Web.Http.Filters;
 using Common;
 using Core;
@@ -10,6 +11,7 @@ using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
 using WebApi.App_Start;
+using WebApi.Exceptions;
 
 namespace WebApi
 {
@@ -43,6 +45,9 @@ namespace WebApi
             settings.Converters.Add(new StringEnumConverter());
 
             config.MapHttpAttributeRoutes();
+
+            config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
+            config.Services.Replace(typeof(IExceptionLogger), new UnhandledExceptionLogger());
 
             config.Routes.MapHttpRoute(
                                        "DefaultApi",

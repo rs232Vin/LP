@@ -53,7 +53,7 @@ namespace BusinessEntities
         {
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentNullException("Name was not provided.");
+                throw new Common.Exceptions.ValidationException("Name was not provided.");
             }
             _name = name;
         }
@@ -62,7 +62,7 @@ namespace BusinessEntities
         {
             if (string.IsNullOrEmpty(email))
             {
-                throw new ArgumentNullException("Name was not provided.");
+                throw new Common.Exceptions.ValidationException("Email was not provided.");
             }
             _email = email;
         }
@@ -77,9 +77,14 @@ namespace BusinessEntities
             _email = _name;
         }
 
-        public void SetMonthlySalary(decimal? monthlySalary)
+        public void SetMonthlySalary(decimal? annualSalary)
         {
-            _monthlySalary = monthlySalary;
+            if(!annualSalary.HasValue)
+            {
+                //throw new ArgumentNullException("Annual Salary not provided.");
+                throw new Common.Exceptions.ValidationException("Annual Salary not provided.");
+            }
+            _monthlySalary = annualSalary.Value/12;
         }
 
         public void SetTags(IEnumerable<string> tags)
